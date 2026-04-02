@@ -17,8 +17,16 @@ export async function getClients() {
 
     if (error) throw error;
     return { success: true, data };
-  } catch (error: any) {
-    console.error("Fetch error:", error.message);
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    let errorMessage = "Failed to fetch clients";
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    else if (typeof error === "string") {
+    errorMessage = error;
+  }
+    console.error("Fetch error:", errorMessage);
+    return { success: false, error: errorMessage };
   }
 }

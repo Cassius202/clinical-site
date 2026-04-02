@@ -62,7 +62,7 @@ const ClientList = () => {
             <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-sky-50">
               <div className="flex items-center gap-2 text-sky-700">
                 <ClipboardList size={20} />
-                <h3 className="font-bold">Doctor's Clinical Notes</h3>
+                <h3 className="font-bold">`{`Doctor's Clinical Notes`}`</h3>
               </div>
               <button onClick={() => setSelectedNote(null)} className="text-gray-400 hover:text-gray-600">
                 <X size={20} />

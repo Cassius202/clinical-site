@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  User,
-  Mail,
-  Phone,
-  Stethoscope,
-  FileText,
-} from "lucide-react";
+import { User, Mail, Phone, Stethoscope, FileText } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function HandoverForm() {
@@ -32,7 +26,6 @@ export default function HandoverForm() {
       const result = await res.json();
 
       if (result.success) {
-        
         toast.success("Success! Client added & 24hr review scheduled.", {
           id: tid,
         });
@@ -40,8 +33,18 @@ export default function HandoverForm() {
       } else {
         throw new Error(result.error);
       }
-    } catch (err: any) {
-      toast.error(err.message || "Failed to sync. Check connection.", {
+    } catch (err: unknown) {
+      let errorMessage = "Failed to process lead";
+
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+      else if (typeof err === "string") {
+        errorMessage = err;
+      }
+
+      console.error("offer-lead error:", errorMessage);
+      toast.error(errorMessage || "Failed to sync. Check connection.", {
         id: tid,
       });
     } finally {
@@ -158,13 +161,7 @@ export default function HandoverForm() {
           disabled={loading}
           className="w-full bg-gray-900 hover:bg-black text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 shadow-lg"
         >
-          {loading ? (
-            "Syncing..."
-          ) : (
-            <>
-              Submit
-            </>
-          )}
+          {loading ? "Syncing..." : <>Submit</>}
         </button>
       </form>
     </div>
