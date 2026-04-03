@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { X, Ear, Loader2 } from 'lucide-react'
 import { assets } from '@/constants/assets'
 import Image from 'next/image'
-import { useLocalStorage } from '@/hooks/useLocalStorage'
+import useSessionStorage from '@/hooks/useSessionStorage'
 
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
@@ -12,10 +12,8 @@ const OfferModal = () => {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false)
   const [formState, setFormState] = useState<FormState>('idle')
-  
-  // 1. Replace useState with useLocalStorage
-  // This will check 'offer-dismissed' in localStorage on mount
-  const [dismissed, setDismissed] = useLocalStorage('offer-dismissed', false)
+
+  const [dismissed, setDismissed] = useSessionStorage('offer-dismissed', false)
 
   const [name, setName]   = useState('')
   const [email, setEmail] = useState('')

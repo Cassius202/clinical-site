@@ -51,7 +51,7 @@ export default async function LeadsPage({
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 font-medium">
-                {data.map((lead: { id: string | number; name: string; email: string; phone?: string; created_at: string }) => (
+                {data.map((lead: any) => (
                   <tr key={lead.id} className="hover:bg-indigo-50/30 transition-colors group">
                     {/* NAME */}
                     <td className="px-4 py-1.5 whitespace-nowrap">

@@ -100,7 +100,7 @@ const Login = () => {
     if (result.success) {
       toast.success("Admin Sign-in successful");
       resetAttempts();
-      router.push("/admin/dashboard");
+      router.push("/admin");
       router.refresh();
     } else {
       const newAttempts = attempts + 1;
