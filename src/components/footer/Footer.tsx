@@ -98,16 +98,31 @@ const Footer = () => {
 
       {/* Bottom bar */}
       <div className="border-t border-zinc-800 bg-zinc-950/50">
-        <div className="container mx-auto px-6 md:px-12 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-zinc-500 text-xs">
-            © {new Date().getFullYear()} Q-Health. All rights reserved.
-          </p>
-          <p className="text-zinc-500 text-xs">
-            Dr. Steve Harrington, ENT Specialist · Kissimmee, FL
-          </p>
+        <div className="container mx-auto px-6 md:px-12 py-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            
+            <div className="flex flex-col gap-1 items-center sm:items-start text-center sm:text-left">
+              <p className="text-zinc-500 text-[11px] font-medium uppercase tracking-wider">
+                © {new Date().getFullYear()} Q-Health. All rights reserved.
+              </p>
+              <p className="text-zinc-600 text-[11px]">
+                Dr. Steve Harrington, ENT Specialist · Kissimmee, FL
+              </p>
+            </div>
+
+            {/* Subtle Admin Entry Point */}
+            <div className="flex items-center gap-4">
+              <Link 
+                href="/admin" 
+                className="text-zinc-700 hover:text-zinc-500 text-[10px] uppercase tracking-widest transition-all duration-300 border-b border-transparent hover:border-zinc-800 pb-0.5"
+              >
+                Admin Login
+              </Link>
+            </div>
+
+          </div>
         </div>
       </div>
-
     </footer>
   )
 }

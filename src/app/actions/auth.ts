@@ -30,7 +30,7 @@ export async function handleLogin(formData: FormData) {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: 60 * 60 * 2,
       path: '/',
     });
     
