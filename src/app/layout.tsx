@@ -3,7 +3,6 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
-import OfferModal from "@/components/lead modal/ModalForm";
 import { Toaster } from "react-hot-toast";
 
 const outfit = Outfit({
@@ -29,7 +28,6 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-[var(--font-outfit)]">
         <Toaster position="top-center" reverseOrder={false} />
         <Header />
-        <OfferModal />
         <main>
           {children}
         </main>

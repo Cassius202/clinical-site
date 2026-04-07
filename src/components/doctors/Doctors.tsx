@@ -74,6 +74,7 @@ const Doctors = () => {
                   src={doc.image}
                   alt={doc.name}
                   fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 200px"
                   className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 />
 

@@ -125,6 +125,7 @@ const FAQPage = () => {
             fill
             className="object-cover object-center opacity-40"
             priority
+            sizes="(max-width: 768px) 100vw, 448px"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/30" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />

@@ -9,41 +9,32 @@ import useSessionStorage from '@/hooks/useSessionStorage'
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
 const OfferModal = () => {
-  const [mounted, setMounted] = useState(false);
+  // const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false)
   const [formState, setFormState] = useState<FormState>('idle')
-
   const [dismissed, setDismissed] = useSessionStorage('offer-dismissed', false)
 
   const [name, setName]   = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
 
-  // Scroll depth trigger
+  // Time-based trigger logic
   useEffect(() => {
-    setMounted(true)
-  }, []);
+    // 1. Don't do anything if already dismissed or not mounted yet
+    if (dismissed) return
 
-  useEffect(() => {
-    // If user has already dismissed or signed up, don't attach listener
-    if (dismissed || !mounted) return
+    // 2. Set the delay (e.g., 10000ms = 10 seconds)
+    const TIMER_DELAY = 10000 
 
-    const handleScroll = () => {
-      const scrolled   = window.scrollY + window.innerHeight
-      const total      = document.documentElement.scrollHeight
-      const percentage = (scrolled / total) * 100
+    const timer = setTimeout(() => {
+      setVisible(true)
+    }, TIMER_DELAY)
 
-      if (percentage >= 60) {
-        setVisible(true)
-        window.removeEventListener('scroll', handleScroll)
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    // 3. Cleanup the timer if the component unmounts before it fires
+    return () => clearTimeout(timer)
   }, [dismissed])
 
-  // Lock body scroll logic
+  // Lock body scroll logic (kept your existing logic)
   useEffect(() => {
     if (visible) {
       const scrollY = window.scrollY
@@ -67,7 +58,7 @@ const OfferModal = () => {
 
   const dismiss = () => {
     setVisible(false)
-    setDismissed(true) // Updates localStorage so it won't show again
+    setDismissed(true)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -84,13 +75,12 @@ const OfferModal = () => {
       if (!res.ok) throw new Error('Failed')
       
       setFormState('success')
-      setDismissed(true) // Ensure they aren't prompted again after converting
+      setDismissed(true) 
     } catch {
       setFormState('error')
     }
   }
 
-  // Only render if visible AND hasn't been dismissed before
   if (!visible || dismissed === true) return null
 
   return (
@@ -103,7 +93,9 @@ const OfferModal = () => {
       <div className="fixed inset-0 z-50 flex items-center justify-center px-4 pointer-events-none">
         <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden pointer-events-auto isolate">
           <div className='h-full w-full pointer-events-none select-none absolute -z-10 bg-stone-50 overflow-hidden'>
-            <Image fill src={assets.backgroundImage} alt="hero" className='w-full object-cover opacity-10' />
+            <Image fill src={assets.backgroundImage} alt="hero" 
+            sizes="(max-width: 768px) 100vw, 448px"
+            className='w-full object-cover opacity-10' />
           </div>
           
           <button

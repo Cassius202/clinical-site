@@ -88,7 +88,7 @@ export async function POST(request: Request) {
         type: "SECOND_FOLLOWUP", // Matches your styled template from earlier
         clientId: newClient.id 
       },
-      delay: 86400, // 24 hours
+      delay: 60, // 24 hours
     });
 
     return NextResponse.json({ success: true });

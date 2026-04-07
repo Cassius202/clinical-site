@@ -61,7 +61,7 @@ const Services = () => {
           {SERVICES.map((service) => (
             <div
               key={service.title}
-              className="relative flex-shrink-0 w-[72vw] sm:w-[55vw] md:w-auto snap-start rounded-2xl overflow-hidden group cursor-pointer"
+              className="relative shrink-0 w-[72vw] sm:w-[55vw] md:w-auto snap-start rounded-2xl overflow-hidden group cursor-pointer"
               style={{ minHeight: '380px' }}
             >
               {/* Background image */}
@@ -73,7 +73,7 @@ const Services = () => {
               />
 
               {/* Dark gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-black/10" />
 
               {/* Stat — top left */}
               <div className="absolute top-4 left-4">
