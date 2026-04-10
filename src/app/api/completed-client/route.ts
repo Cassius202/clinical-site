@@ -75,7 +75,7 @@ export async function POST(request: Request) {
 
     // 3. QSTASH (Conditional Logic)
     if (!skip_review) {
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      const baseUrl = process.env.APP_URL || `https://${process.env.VERCEL_URL}`;
       const callbackUrl = `${baseUrl}/api/send-email`;
 
       await qstash.publishJSON({
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
           type: "SECOND_FOLLOWUP", 
           clientId: newClient.id 
         },
-        delay: 86400, // Changed to 86400 (24 hours in seconds). Your previous "60" was 1 minute.
+        delay: 100, // Changed to 86400 (24 hours in seconds). Your previous "60" was 1 minute.
       });
       console.log(`Review scheduled for ${email}`);
     } else {
