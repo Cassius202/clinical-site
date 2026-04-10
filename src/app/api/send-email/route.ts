@@ -1,10 +1,24 @@
 import { Resend } from 'resend'
+import { Receiver } from "@upstash/qstash";
+
+const receiver = new Receiver({
+  currentSigningKey: process.env.QSTASH_CURRENT_SIGNING_KEY!,
+  nextSigningKey: process.env.QSTASH_NEXT_SIGNING_KEY!,
+});
 
 const resend = new Resend(process.env.RESEND_API_KEY!)
 
 export async function POST(req: Request) {
   try {
-    const { email, name, type } = await req.json()
+    const body = await req.text();
+    const isValid = await receiver.verify({
+      signature: req.headers.get("upstash-signature")!,
+      body,
+    }).catch(() => false);
+
+    if (!isValid) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
+    const { email, name, type } = JSON.parse(body);
 
     const templates: Record<string, { subject: string; html: string }> = {
       // Offer modal emails
@@ -22,8 +36,8 @@ export async function POST(req: Request) {
         html: `<p>Thanks for subscribing! You'll receive practical ENT health advice from Dr. Steve every month.</p>`,
       },
       FIRST_FOLLOWUP: {
-    subject: `How was your visit, ${name}?`,
-    html: `
+        subject: `How was your visit, ${name}?`,
+        html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #334155;">
         <h2 style="color: #0284c7; font-size: 24px;">Hi ${name},</h2>
         <p style="font-size: 16px; line-height: 1.6;">
@@ -38,10 +52,10 @@ export async function POST(req: Request) {
         </p>
       </div>
     `,
-  },
-  SECOND_FOLLOWUP: {
-    subject: 'A quick favor for Dr. Steve',
-    html: `
+      },
+      SECOND_FOLLOWUP: {
+        subject: 'A quick favor for Dr. Steve',
+        html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #334155; text-align: center;">
         <div style="background-color: #f0f9ff; padding: 40px; border-radius: 16px;">
           <h2 style="color: #0284c7; margin-bottom: 20px;">Could you do us a favor?</h2>
@@ -61,8 +75,8 @@ export async function POST(req: Request) {
         </div>
       </div>
     `,
-  },
-};
+      },
+    };
     const template = templates[type]
     if (!template) return Response.json({ error: 'Invalid type' }, { status: 400 })
 
