@@ -10,7 +10,7 @@ const qstash = new Client({ token: process.env.QSTASH_TOKEN! })
 export async function POST(req: Request) {
   try {
     const { email } = await req.json()
-    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://clinical-health-site.vercel.app/";
+    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || `https://${process.env.VERCEL_URL}`;
 
     // 1. Save to Supabase (ignore duplicate emails)
     const { error } = await supabase

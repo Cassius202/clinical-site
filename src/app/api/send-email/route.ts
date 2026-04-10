@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const isValid = await receiver.verify({
       signature: req.headers.get("upstash-signature")!,
       body,
-      url: `${process.env.APP_URL}/api/send-email`, // 👈 this is the missing piece
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/send-email`, // 👈 this is the missing piece
     }).catch((err) => {
       console.error("QStash verification failed:", err); // log the real error
       return false;
