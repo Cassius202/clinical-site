@@ -1,5 +1,3 @@
-"use server";
-
 import { createClient } from "@supabase/supabase-js";
 import { Client } from "@upstash/qstash";
 import { NextResponse } from "next/server";
