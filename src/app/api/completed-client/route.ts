@@ -75,7 +75,7 @@ export async function POST(request: Request) {
 
     // 3. QSTASH (Conditional Logic)
     if (!skip_review) {
-      const baseUrl = process.env.APP_URL || `https://${process.env.VERCEL_URL}`;
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
       const callbackUrl = `${baseUrl}/api/send-email`;
 
       await qstash.publishJSON({
