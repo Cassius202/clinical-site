@@ -67,7 +67,7 @@ export async function POST(req: Request) {
     if (!template) return Response.json({ error: 'Invalid type' }, { status: 400 })
 
     await resend.emails.send({
-      from: 'Dr. Steve <no-reply@cassiusdev.online>',
+      from: 'Dr. Steve <business@cassiusdev.online>',
       to: email,
       subject: template.subject,
       html: template.html,
@@ -79,4 +79,3 @@ export async function POST(req: Request) {
     return Response.json({ error: 'Failed to send email' }, { status: 500 })
   }
 }
-
