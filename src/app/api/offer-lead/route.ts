@@ -14,7 +14,11 @@ export async function POST(req: Request) {
     const { name, email, phone } = await req.json()
 
     // Use APP_URL or VERCEL_URL for QStash callbacks
-    const BASE_URL = process.env.APP_URL || `https://${process.env.VERCEL_URL}`
+    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || `https://${process.env.VERCEL_URL}`;
+
+    if (!BASE_URL.startsWith('https://')) {
+      throw new Error(`Invalid BASE_URL: "${BASE_URL}" — must start with https://`);
+    }
 
     // 1. Save to Supabase
     const { error: sbError } = await supabase
